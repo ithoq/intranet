@@ -1,6 +1,7 @@
 <?php
 
 $params = require(__DIR__ . '/params.php');
+$modulos = require(__DIR__ . '/modulos.php');
 
 $config = [
     'id' => 'basic',
@@ -38,8 +39,22 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        'urlManager' => [
+            //'urlFormat' => 'path',
+            'showScriptName' => false,
+            //'enableStrictParsing' => true,
+            'enablePrettyUrl' => true,
+            'rules' => [
+                'site/page/<view:\w+>' => 'site/page/',
+                '<controller:\w+>/<id:\d+>' => '<controller>/view',
+                '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
+            ],
+        ],
     ],
     'params' => $params,
+    /*definicion de modulos de la aplicacion*/
+    'modules' => $modulos,
 ];
 
 if (YII_ENV_DEV) {
