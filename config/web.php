@@ -6,11 +6,12 @@ $modulos = require(__DIR__ . '/modulos.php');
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
+    'language' => 'es',
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'IqeMVj7SD7zJM62sUNeXNVttAPpag2sf',
+            'cookieValidationKey' => 'h8pmv7opsbl15jp5q81qr11r42',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -27,7 +28,23 @@ $config = [
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
             // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'servidor.correo.msanchez@gmail.com',
+                'password' => 'c0rr30*-*',
+                //'host' => 'mailserver.copservir.com',
+                //'username' => 'administradorPQRS@copservir.com',
+                //'password' => 'K7521ch$',
+                'port' => '587',
+                //'port' => '25',
+                'encryption' => 'tls',
+            ]
+        ],
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            'defaultRoles' => ['guest'],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -42,7 +59,7 @@ $config = [
         'urlManager' => [
             //'urlFormat' => 'path',
             'showScriptName' => false,
-            //'enableStrictParsing' => true,
+            //'caseSensitive' => true,
             'enablePrettyUrl' => true,
             'rules' => [
                 'site/page/<view:\w+>' => 'site/page/',
@@ -53,8 +70,12 @@ $config = [
         ],
     ],
     'params' => $params,
-    /*definicion de modulos de la aplicacion*/
-    'modules' => $modulos,
+    'modules' => [
+        'gridview' => [
+            'class' => '\kartik\grid\Module',
+            //'downloadAction' => '',
+        ]
+    ],
 ];
 
 if (YII_ENV_DEV) {
