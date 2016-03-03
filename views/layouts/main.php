@@ -43,15 +43,19 @@ AppAsset::register($this);
                     ['label' => 'Mis publicaciones', 'url' => '#'],
                     '<li class="divider"></li>',
                     // '<li class="dropdown-header">Dropdown Header</li>',
-                    ['label' => 'Salir ' . Yii::$app->user->identity->alias, 'url' => ['/site/logout'],
+                    ['label' => 'Salir ' . Yii::$app->user->identity->alias . " <span class='glyphicon glyphicon-off'></span>", 'url' => ['/site/logout'],
                         'linkOptions' => ['data-method' => 'post']]
                 ];
             }
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
+                'encodeLabels' => false,
                 'items' => [
-                    !Yii::$app->user->isGuest ?['label' => Yii::$app->user->identity->alias, 'url' => ['#']] : ['label' => ''],
-                    ['label' => 'Mi cuenta', //Html::tag('span', '', ['class' => "glyphicon glyphicon-cog"]),
+                    !Yii::$app->user->isGuest ? ['label' => Yii::$app->user->identity->alias . " <span class='badge badge-important'>3</span>", 'url' => ['#']] : ['label' => ''],
+                    !Yii::$app->user->isGuest ? ['label' => '<div class="profile-pic">
+                                                                <img width="30" height="30" alt="" src="'.Yii::$app->homeUrl . 'img/fotosperfil/'. \Yii::$app->user->identity->imagenPerfil.'">
+                                                            </div>'] : ['label' => ''],
+                    ['label' => '<span class="glyphicon glyphicon-cog"></span>', //Html::tag('span', '', ['class' => "glyphicon glyphicon-cog"]),
                         'items' => $opciones,
                     ],
                 ],
@@ -69,14 +73,6 @@ AppAsset::register($this);
                 <?= $content ?>
             </div>
         </div>
-
-        <footer class="footer">
-            <div class="container">
-                <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-                <p class="pull-right"><?= Yii::powered() ?></p>
-            </div>
-        </footer>
 
         <?php $this->endBody() ?>
     </body>
